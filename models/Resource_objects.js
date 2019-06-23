@@ -12,10 +12,32 @@ const objectSchema = mongoose.Schema(
     },
     parent: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Objects"
+      ref: "Objects",
+      default: null
+    },
+    all_parents: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Objects"
+      }
+    ],
+    all_childs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Objects"
+      }
+    ],
+    file_name: {
+      type: String
     },
     file_path: {
       type: String
+    },
+    mimetype: {
+      type: String
+    },
+    size: {
+      type: Number
     }
   },
   {
