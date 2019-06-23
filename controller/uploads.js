@@ -14,24 +14,24 @@ const createFolder = async (folderName, parent) => {
     object_name: folderName,
     parent: parent,
     all_parents: all_parents,
-    all_childs: []
+    following_childs: []
   });
-  const resultDoc = await docified.save();
   if (parent) {
     await ObjectsStore.findOneAndUpdate(
       { _id: parent },
-      { $push: { all_childs: resultDoc._id } }
+      { $push: { following_childs: docified._id } }
     ).exec();
   }
-  return resultDoc;
+  return await docified.save();
 };
 
 const insertFile = async (fileObject, parent = null) => {
   let all_parents = [];
   if (parent) {
-    const objectData = await ObjectsStore.findOne({ _id: parent })
-      .select("all_parents")
-      .exec();
+    const objectData =
+      (await ObjectsStore.findOne({ _id: parent })
+        .select("all_parents")
+        .exec()) || {};
     all_parents = objectData.all_parents || [];
     all_parents.push(parent);
   }
@@ -50,7 +50,7 @@ const insertFile = async (fileObject, parent = null) => {
   if (parent) {
     await ObjectsStore.findOneAndUpdate(
       { _id: parent },
-      { $push: { all_childs: resultDoc._id } }
+      { $push: { following_childs: resultDoc._id } }
     ).exec();
   }
   return resultDoc;

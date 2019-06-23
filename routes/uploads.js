@@ -32,13 +32,13 @@ router.post("/", (req, res, next) => {
     }
     if (req.file) {
       const result = await uploadCont.insertFile(req.file, req.body.parent);
-      return res.send(result);
+      return res.json(result);
     } else {
-      const result = uploadCont.createFolder(
+      const result = await uploadCont.createFolder(
         req.body.folderName,
         req.body.parent
       );
-      return res.send(result);
+      return res.json(result);
     }
   });
 });
@@ -46,6 +46,17 @@ router.post("/", (req, res, next) => {
 router.get("/", (req, res, next) => {
   return fileOpsCont
     .getObject(req.query.p)
+    .then(d => {
+      return res.json(d);
+    })
+    .catch(ex => {
+      return next(ex);
+    });
+});
+
+router.post("/delete", (req, res, next) => {
+  return fileOpsCont
+    .deleteObject(req.query.o)
     .then(d => {
       return res.json(d);
     })
