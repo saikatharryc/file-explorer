@@ -1,7 +1,7 @@
-const uploads = require("./uploads");
+const fileOps = require("./files");
 
 let api = {};
 api.includeRoutes = app => {
-  app.use("/uploads", uploads);
+  app.use("/files", fileOps);
 };
 module.exports = api;

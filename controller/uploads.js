@@ -1,5 +1,10 @@
 const ObjectsStore = require("../models/Resource_objects");
 
+/**
+ *
+ * @param {String} folderName
+ * @param {String} parent
+ */
 const createFolder = async (folderName, parent) => {
   let all_parents = [];
   if (parent) {
@@ -25,6 +30,11 @@ const createFolder = async (folderName, parent) => {
   return await docified.save();
 };
 
+/**
+ *
+ * @param {String} fileObject
+ * @param {String} parent
+ */
 const insertFile = async (fileObject, parent = null) => {
   let all_parents = [];
   if (parent) {
