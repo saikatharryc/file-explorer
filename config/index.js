@@ -4,5 +4,6 @@ module.exports = {
     OPTIONS: {
       useNewUrlParser: true
     }
-  }
+  },
+  FILE_DEST: "files"
 };

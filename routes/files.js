@@ -4,12 +4,13 @@ const uuid = require("uuid/v4");
 const ObjectId = require("mongoose").Types.ObjectId;
 const router = express.Router();
 
+const config = require("../config");
 const uploadCont = require("../controller/uploads");
 const fileOpsCont = require("../controller/objectOps");
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "files");
+    cb(null, config.FILE_DEST);
   },
   filename: function(req, file, cb) {
     const fileSpilts = file.originalname.split(".");
