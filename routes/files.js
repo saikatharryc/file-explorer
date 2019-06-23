@@ -41,9 +41,11 @@ router.post("/", (req, res, next) => {
     if (req.file) {
       const result = await uploadCont.insertFile(req.file, parent);
       return res.json(result);
-    } else {
+    } else if (req.body.folderName) {
       const result = await uploadCont.createFolder(req.body.folderName, parent);
       return res.json(result);
+    } else {
+      return next({ message: "required elements not present in request" });
     }
   });
 });
