@@ -1,14 +1,17 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
 const logger = require("morgan");
 const routes = require("./routes");
-
+const config = require("./config");
 const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+mongoose.connect(config.MONGO.URI, config.MONGO.OPTIONS);
 
 routes.includeRoutes(app);
 
@@ -45,7 +48,7 @@ app.use((err, req, res, next) => {
   return res.status(err.status || 500).json(errorObj);
 });
 
-rocess.on("SIGTERM", function() {
+process.on("SIGTERM", function() {
   //do something before Gracefully shut it down
   process.exit(0);
 });
